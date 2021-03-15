@@ -2,9 +2,9 @@
 
 ## Team members
 
--Stefan Negulescu
--Gal Iulian
--Hirnea Gabriel
+- Stefan Negulescu
+- Gal Iulian
+- Hirnea Gabriel
 
 ## User stories
 
