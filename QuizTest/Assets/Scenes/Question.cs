@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-
+ 
 public class Question
 {
     public string fact;
@@ -12,6 +12,9 @@ public class Question
     {
         return 0;
     }
+    public Question(string q){
+        fact = q;
+    }
 }
 
 
@@ -22,9 +25,12 @@ public class QuestionTF: Question
     {
         return isTrue;
     }
+    public QuestionTF (string q,bool T): base (q){
+        isTrue = T;
+    }
     
 }
- 
+
 public class Question4: Question
 {
     public string[] answers;
@@ -32,6 +38,10 @@ public class Question4: Question
     public override int getIndex()
     {
         return correctIndex;
+    }
+    public Question4 (string q, string[] ans,int t): base (q){
+        answers = ans;
+        correctIndex = t;
     }
 }
 

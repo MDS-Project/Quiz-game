@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
-    public QuestionTF[] questionsTF;
-    public Question4[] question4;
+    public QuestionTF[] questionsTF = new QuestionTF[] {new QuestionTF("4+4=2",false),new QuestionTF("2+2=4",true)};
+    public Question4[] question4 = new Question4[] {new Question4("Cat face 2+2?",new string[]{"2","3","4","5"},2),new Question4("Cat face 3+2?",new string[]{"2","3","4","5"},3)};
 
     [SerializeField]
     private Text factText;
@@ -22,30 +22,32 @@ public class QuizManager : MonoBehaviour
     private Text answer4;
     [SerializeField]
     private float time = 1f;
-
+    private static int ok = 0;
 
     private static List<Question> unansweredQuestion;
 
     private static Question currentQuestion;
     void Start ()
     {
-        if (unansweredQuestion == null || unansweredQuestion.Count == 0)
+        
+        if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 0)
         {
             unansweredQuestion = questionsTF.ToList<Question>();
             unansweredQuestion.AddRange(question4.ToList<Question>());
             getRandomQuestion();
+            ok++;
         }
+        
 
         showQuestion();
 
-        Debug.Log(currentQuestion.fact + " is " + currentQuestion.getTrue() + " " + currentQuestion.GetType());
         
     }
     void showQuestion()
     {
         if (currentQuestion.GetType() == typeof(Question4))
         {
-
+            factText.text = currentQuestion.fact;
             Question4 q = (Question4)currentQuestion;
             answer1.text = q.answers[0];
             answer2.text = q.answers[1];
@@ -60,17 +62,25 @@ public class QuizManager : MonoBehaviour
 
     void getRandomQuestion()
     {
+        if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 1)
+        {
+            Debug.Log("terminat");
+            Application.Quit();
+        }else{
         int randomQuestionIndex = Random.Range(0, unansweredQuestion.Count);
         currentQuestion = unansweredQuestion[randomQuestionIndex];
         if (currentQuestion.GetType() == typeof(Question4))
         {
-            SceneManager.LoadScene("Scene_!");
+            SceneManager.LoadScene("Scene_1");
         }
         else
         {
             SceneManager.LoadScene("Scene_2");
         }
+        
             unansweredQuestion.RemoveAt(randomQuestionIndex);
+        }
+    
     }
 
    
