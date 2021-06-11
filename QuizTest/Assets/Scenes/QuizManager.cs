@@ -26,13 +26,19 @@ public class QuizManager : MonoBehaviour
     private Text Timer;
     private static int ok = 0;
     private static float score = 0;
-    private static int nrCorrectAns = 0;
     private float timeRemaining = 5;
     private bool timerIsRunning = false;
     private int score1 = (int) score;
     private static List<Question> unansweredQuestion;
-
     private static Question currentQuestion;
+
+    public static int getScore(){
+        return (int) score;
+    }
+
+    public static void setScore(){
+        score = 0;
+    }
     void Start ()
     {
         
@@ -95,9 +101,9 @@ public class QuizManager : MonoBehaviour
         if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 1)
         {
             Debug.Log("terminat");
-            Debug.Log("Intrebari raspunse corect "+nrCorrectAns);
             Debug.Log("Score "+score);
-             SceneManager.LoadScene("Scene_home");
+            ok = 0;
+            SceneManager.LoadScene("Scene_SingleFinal");
         }else{
         int randomQuestionIndex = Random.Range(0, unansweredQuestion.Count);
         currentQuestion = unansweredQuestion[randomQuestionIndex];
@@ -122,7 +128,6 @@ public class QuizManager : MonoBehaviour
         if(currentQuestion.getIndex() == i)
         {
             Debug.Log("Correct!");
-            nrCorrectAns++;
             score = score+(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
@@ -139,7 +144,6 @@ public class QuizManager : MonoBehaviour
         if (currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
-            nrCorrectAns++;
             score += +(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
@@ -155,15 +159,15 @@ public class QuizManager : MonoBehaviour
         if (!currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
-            nrCorrectAns++;
+           
             score = score+(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
         }
         else
-        {
+        {   
             Debug.Log("Wrong!");
-            nrCorrectAns++;
+          
         }
         getRandomQuestion();
     }
