@@ -32,6 +32,7 @@ public class QuizManager : MonoBehaviour
     private static List<Question> unansweredQuestion;
     private static Question currentQuestion;
 
+
     public static int getScore(){
         return (int) score;
     }
@@ -125,6 +126,7 @@ public class QuizManager : MonoBehaviour
 
     public void UserSelectAnswer(int i)
     {
+
         if(currentQuestion.getIndex() == i)
         {
             Debug.Log("Correct!");
