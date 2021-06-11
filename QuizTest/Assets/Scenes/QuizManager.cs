@@ -21,9 +21,15 @@ public class QuizManager : MonoBehaviour
     [SerializeField]
     private Text answer4;
     [SerializeField]
-    private float time = 1f;
+    private Text Score;
+    [SerializeField]
+    private Text Timer;
     private static int ok = 0;
-
+    private static float score = 0;
+    private static int nrCorrectAns = 0;
+    private float timeRemaining = 5;
+    private bool timerIsRunning = false;
+    private int score1 = (int) score;
     private static List<Question> unansweredQuestion;
 
     private static Question currentQuestion;
@@ -37,12 +43,36 @@ public class QuizManager : MonoBehaviour
             getRandomQuestion();
             ok++;
         }
-        
+
+         Score.text = score1.ToString();
 
         showQuestion();
+        timerIsRunning = true;
 
         
     }
+
+    void Update()
+    {
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                int timeR = (int) timeRemaining;
+                Timer.text = timeR.ToString();
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                timeRemaining = 0;
+                timerIsRunning = false;
+                Timer.text = timeRemaining.ToString();
+                getRandomQuestion();
+            }
+        }
+    }
+
     void showQuestion()
     {
         if (currentQuestion.GetType() == typeof(Question4))
@@ -65,7 +95,9 @@ public class QuizManager : MonoBehaviour
         if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 1)
         {
             Debug.Log("terminat");
-            Application.Quit();
+            Debug.Log("Intrebari raspunse corect "+nrCorrectAns);
+            Debug.Log("Score "+score);
+             SceneManager.LoadScene("Scene_home");
         }else{
         int randomQuestionIndex = Random.Range(0, unansweredQuestion.Count);
         currentQuestion = unansweredQuestion[randomQuestionIndex];
@@ -90,6 +122,10 @@ public class QuizManager : MonoBehaviour
         if(currentQuestion.getIndex() == i)
         {
             Debug.Log("Correct!");
+            nrCorrectAns++;
+            score = score+(timeRemaining*1000); 
+            score1 = (int) score;
+            Score.text = score1.ToString();
         }
         else
         {
@@ -103,6 +139,10 @@ public class QuizManager : MonoBehaviour
         if (currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
+            nrCorrectAns++;
+            score += +(timeRemaining*1000); 
+            score1 = (int) score;
+            Score.text = score1.ToString();
         }else
         {
             Debug.Log("Wrong!");
@@ -115,10 +155,15 @@ public class QuizManager : MonoBehaviour
         if (!currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
+            nrCorrectAns++;
+            score = score+(timeRemaining*1000); 
+            score1 = (int) score;
+            Score.text = score1.ToString();
         }
         else
         {
             Debug.Log("Wrong!");
+            nrCorrectAns++;
         }
         getRandomQuestion();
     }
