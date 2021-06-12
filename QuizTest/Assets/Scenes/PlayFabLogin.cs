@@ -22,7 +22,7 @@ public class PlayFabLogin : MonoBehaviour
         {
         userEmail = PlayerPrefs.GetString("EMAIL");
         userPassword = PlayerPrefs.GetString("PASSWORD");
-        var request = new LoginWithEmailAddressRequest {Email = userEmail, Password= userPassword};
+        var request = new LoginWithEmailAddressRequest {Email = userEmail, Password = userPassword};
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
         }
     }
@@ -68,6 +68,7 @@ public class PlayFabLogin : MonoBehaviour
      public void GetUserUsername (string usernameIn)
     {
         username= usernameIn;
+
     }
 
     public void OnClickLogin()
