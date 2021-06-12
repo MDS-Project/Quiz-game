@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +28,16 @@ public class Menu : MonoBehaviour
     public void LoadPlayMenu()
     {
         SceneManager.LoadScene("Scene_PlayMenu");
+    }
+
+    public void LoadSignup()
+    {
+        SceneManager.LoadScene("Scene_SignUp");
+    }
+
+    public void LoadLeaderboard()
+    {
+        SceneManager.LoadScene("Scene_Leaderboard");
     }
 
 

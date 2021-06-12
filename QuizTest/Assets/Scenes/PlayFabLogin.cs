@@ -1,14 +1,18 @@
-﻿using PlayFab;
+﻿using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayFabLogin : MonoBehaviour
 {
     private string username;
     private string userEmail;
-    private string userPassword;
+    private string userPassword;    
     public GameObject loginPanel;
-    
 
     public void Start()
     {
@@ -33,6 +37,8 @@ public class PlayFabLogin : MonoBehaviour
         PlayerPrefs.SetString("EMAIL",userEmail);
         PlayerPrefs.SetString("PASSWORD", userPassword);
         loginPanel.SetActive(false);
+        LoadMainMenu();
+        
     }
 
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
@@ -41,6 +47,8 @@ public class PlayFabLogin : MonoBehaviour
         PlayerPrefs.SetString("EMAIL",userEmail);
         PlayerPrefs.SetString("PASSWORD", userPassword);
         loginPanel.SetActive(false);
+        //result.InfoResultPayload.PlayerProfile.DisplayName = "anonim";
+        LoadMainMenu();
     }
 
     private void OnRegisterFailure(PlayFabError error)
@@ -75,5 +83,10 @@ public class PlayFabLogin : MonoBehaviour
     {
         var request = new LoginWithEmailAddressRequest {Email = userEmail, Password= userPassword};
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Scene_home");
     }
 }
