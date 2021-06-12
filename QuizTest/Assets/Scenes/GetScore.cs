@@ -13,6 +13,9 @@ public class GetScore : MonoBehaviour
      void Start ()
     {
         Score.text = score.ToString();
+        LeaderBoardManager playfab = new LeaderBoardManager();
+        playfab.SendLeaderboard(score);
+        playfab.GetLeaderboard();
         QuizManager.setScore();
 
     }
