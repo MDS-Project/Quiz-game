@@ -764,6 +764,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 246415853}
+        m_MethodName: getButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 280981270}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 246415853}
         m_MethodName: UserSelectAnswer
         m_Mode: 3
         m_Arguments:
@@ -1909,6 +1920,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 246415853}
+        m_MethodName: getButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 828964277}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 246415853}
         m_MethodName: UserSelectAnswer
         m_Mode: 3
         m_Arguments:
@@ -2991,6 +3013,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 246415853}
+        m_MethodName: getButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1475871014}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 246415853}
         m_MethodName: UserSelectAnswer
         m_Mode: 3
@@ -4083,6 +4116,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 246415853}
+        m_MethodName: getButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1977294303}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 246415853}
         m_MethodName: UserSelectAnswer
         m_Mode: 3
