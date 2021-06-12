@@ -476,7 +476,6 @@ MonoBehaviour:
   answer4: {fileID: 295354932}
   Score: {fileID: 750895061}
   Timer: {fileID: 736959531}
-  correctButton: {fileID: 1977294303}
 --- !u!4 &246415854
 Transform:
   m_ObjectHideFlags: 0
