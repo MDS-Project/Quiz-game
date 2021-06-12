@@ -32,6 +32,8 @@ public class QuizManager : MonoBehaviour
     private static List<Question> unansweredQuestion;
     private static Question currentQuestion;
 
+    private Button button;
+
     public static int getScore(){
         return (int) score;
     }
@@ -121,54 +123,79 @@ public class QuizManager : MonoBehaviour
     
     }
 
-   
-
-    public void UserSelectAnswer(int i)
+    public void getButton(Button btn)
     {
+        button =  btn;
+    }
+    public void UserSelectAnswer(int i)
+    {    
+         
         if(currentQuestion.getIndex() == i)
         {
             Debug.Log("Correct!");
             score = score+(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
+            button.image.color = Color.green;
         }
         else
         {
             Debug.Log("Wrong!");
+            button.image.color = Color.red;
         }
-        getRandomQuestion();
+        timerIsRunning = false;
+        button = null;
+        StartCoroutine(Test());
     }
 
     public void UserSelectTrue ()
     {
+         
+         currentQuestion = (QuestionTF) currentQuestion;
+         Debug.Log(currentQuestion.getTrue());
         if (currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
             score += +(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
+            button.image.color = Color.green;
         }else
         {
+            button.image.color = Color.red;
+
             Debug.Log("Wrong!");
         }
-        getRandomQuestion();
+        timerIsRunning = false;
+        StartCoroutine(Test());
     }
 
     public void UserSelectFalse()
     {
+         
+          Debug.Log(currentQuestion.getTrue());
+          currentQuestion = (QuestionTF) currentQuestion;
         if (!currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
-           
+            button.image.color = Color.green;
             score = score+(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
         }
         else
         {   
+            button.image.color = Color.red;
             Debug.Log("Wrong!");
-          
         }
+        timerIsRunning = false;
+        StartCoroutine(Test());
+        
+    }
+    IEnumerator Test(){
+        
+        yield return new WaitForSeconds (2);
+         timerIsRunning = true;
         getRandomQuestion();
     }
 }
