@@ -7,12 +7,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PlayFabLogin : MonoBehaviour
+public class PlayFabSignUp : MonoBehaviour
 {
     private string username;
     private string userEmail;
-    private string userPassword;
-    [SerializeField]
+    private string userPassword;    
     public GameObject loginPanel;
     [SerializeField]
     public GameObject Error;
@@ -22,34 +21,33 @@ public class PlayFabLogin : MonoBehaviour
         if (string.IsNullOrEmpty(PlayFabSettings.TitleId)){
             PlayFabSettings.TitleId = "448FE"; 
         }
-        if(PlayerPrefs.HasKey("EMAIL"))
-        {
-        userEmail = PlayerPrefs.GetString("EMAIL");
-        Debug.Log(userEmail);
-        userPassword = PlayerPrefs.GetString("PASSWORD");
-        Debug.Log(userPassword);
-        var request = new LoginWithEmailAddressRequest {Email = userEmail, Password = userPassword};
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
-        }
     }
 
-    private void OnLoginSuccess(LoginResult result)
+    public void OnClickSingUp()
+    {
+        var registerRequest = new RegisterPlayFabUserRequest {Email = userEmail, Password = userPassword, Username = username};
+        PlayFabClientAPI.RegisterPlayFabUser(registerRequest, OnRegisterSuccess, OnRegisterFailure);
+    }
+   
+    private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         Debug.Log("Congratulations, you made your first successful API call!");
         PlayerPrefs.SetString("EMAIL",userEmail);
         PlayerPrefs.SetString("PASSWORD", userPassword);
-        username = PlayerPrefs.GetString("USERNAME");
+        PlayFabClientAPI.UpdateUserTitleDisplayName( new UpdateUserTitleDisplayNameRequest {
+        DisplayName = username
+     }, resul => {
+        Debug.Log("The player's display name is now: " + resul.DisplayName);
+    }, error => Debug.LogError(error.GenerateErrorReport()));
         LoadMainMenu();
-        
     }
 
-    
-    private void OnLoginFailure(PlayFabError error)
+    private void OnRegisterFailure(PlayFabError error)
     {
         StartCoroutine(Wait2());
-        //var registerRequest = new RegisterPlayFabUserRequest {Email = userEmail, Password = userPassword, Username = username};
-        //PlayFabClientAPI.RegisterPlayFabUser(registerRequest, OnRegisterSuccess, OnRegisterFailure);
+        Debug.LogError(error.GenerateErrorReport());
     }
+    
 
      IEnumerator Wait2(){
 
@@ -75,11 +73,6 @@ public class PlayFabLogin : MonoBehaviour
 
     }
 
-    public void OnClickLogin()
-    {
-        var request = new LoginWithEmailAddressRequest {Email = userEmail, Password= userPassword};
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
-    }
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("Scene_home");
