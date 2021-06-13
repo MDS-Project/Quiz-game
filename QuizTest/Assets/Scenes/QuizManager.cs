@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class QuizManager : MonoBehaviour
 {
     public QuestionTF[] questionsTF = new QuestionTF[] {new QuestionTF("4+4=2",false),new QuestionTF("2+2=4",true)};
@@ -22,6 +23,8 @@ public class QuizManager : MonoBehaviour
     private Text answer4;
     [SerializeField]
     private Text Score;
+    [SerializeField]
+    private GameObject Blocker;
     [SerializeField]
     private Text Timer;
     private static int ok = 0;
@@ -43,7 +46,7 @@ public class QuizManager : MonoBehaviour
     }
     void Start ()
     {
-        
+        Blocker.SetActive(false);
         if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 0)
         {
             unansweredQuestion = questionsTF.ToList<Question>();
@@ -100,6 +103,7 @@ public class QuizManager : MonoBehaviour
 
     void getRandomQuestion()
     {
+        Blocker.SetActive(false);
         if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 1)
         {
             Debug.Log("terminat");
@@ -129,7 +133,7 @@ public class QuizManager : MonoBehaviour
     }
     public void UserSelectAnswer(int i)
     {    
-         
+        Blocker.SetActive(true);
         if(currentQuestion.getIndex() == i)
         {
             Debug.Log("Correct!");
@@ -145,13 +149,12 @@ public class QuizManager : MonoBehaviour
         }
         timerIsRunning = false;
         button = null;
-        StartCoroutine(Test());
+        StartCoroutine(Wait2());
     }
 
     public void UserSelectTrue ()
     {
-         
-         currentQuestion = (QuestionTF) currentQuestion;
+         Blocker.SetActive(true);
          Debug.Log(currentQuestion.getTrue());
         if (currentQuestion.getTrue())
         {
@@ -167,13 +170,12 @@ public class QuizManager : MonoBehaviour
             Debug.Log("Wrong!");
         }
         timerIsRunning = false;
-        StartCoroutine(Test());
+        StartCoroutine(Wait2());
     }
 
     public void UserSelectFalse()
     {
-         
-          Debug.Log(currentQuestion.getTrue());
+          Blocker.SetActive(true);
           currentQuestion = (QuestionTF) currentQuestion;
         if (!currentQuestion.getTrue())
         {
@@ -189,13 +191,15 @@ public class QuizManager : MonoBehaviour
             Debug.Log("Wrong!");
         }
         timerIsRunning = false;
-        StartCoroutine(Test());
+        StartCoroutine(Wait2());
         
     }
-    IEnumerator Test(){
+    IEnumerator Wait2(){
         
         yield return new WaitForSeconds (2);
          timerIsRunning = true;
         getRandomQuestion();
     }
+
+ 
 }
