@@ -41,8 +41,11 @@ public class Menu : MonoBehaviour
     }
     public void LoadLogIn()
     {
-	SceneManager.LoadScene("Scene_LogIn");
+	SceneManager.LoadScene("Scene_Profile");
     }
-
+    public void LoadUpdate()
+    {
+	SceneManager.LoadScene("Scene_home");
+    }
 
 }
