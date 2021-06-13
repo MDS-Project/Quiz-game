@@ -39,6 +39,10 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene("Scene_Leaderboard");
     }
+    public void LoadLogIn()
+    {
+	SceneManager.LoadScene("Scene_LogIn");
+    }
 
 
 }
