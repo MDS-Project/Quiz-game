@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
-    public QuestionTF[] questionsTF = new QuestionTF[] {new QuestionTF("4+4=2",false),new QuestionTF("2+2=4",true)};
-    public Question4[] question4 = new Question4[] {new Question4("Cat face 2+2?",new string[]{"2","3","4","5"},2),new Question4("Cat face 3+2?",new string[]{"2","3","4","5"},3)};
+    public QuestionTF[] questionsTF = new QuestionTF[] {new QuestionTF("The Channel Tunnel is the longest rail tunnel in the world",false),new QuestionTF("A woman has walked on the Moon",false),new QuestionTF("According to Scottish law, it is illegal to be drunk in charge of a cow",true),new QuestionTF("Vietnamese is an official language in Canada",false), new QuestionTF("The setting for the ITV drama Midsomer Murders is a fictional English county called Midsomer",true), new QuestionTF("An emu can fly",false), new QuestionTF("The can-opener was not invented until 45 years after the tin can",true), new QuestionTF("There are McDonald’s one every continent except one",true), new QuestionTF("Stephen Hawking declined a knighthood from the Queen",true), new QuestionTF("The five rings on the Olympic flag are interlocking?",true),new QuestionTF(" Mount Kilimanjaro is the highest mountain in the world?",false),new QuestionTF("A group of swans is known as a bevy?",true),new QuestionTF("Sydney is the capital of Australia?",false),new QuestionTF("Fish cannot blink?",true),new QuestionTF("Seahorses have no teeth or stomach?",true),new QuestionTF("Nepal is the only country in the world which does not have a rectangular flag?",true),new QuestionTF("Switzerland shares land borders with four other countries?",false),new QuestionTF("The knight is the only piece in chess which can only move diagonally?",true)};
+    public Question4[] question4 = new Question4[] {new Question4("What is the capital of Chile?",new string[]{"Santiago","Barcelona","Moscow","Mexico City"},0),new Question4("What is the largest country in the world?",new string[]{"USA","Africa","China","Russia"},3),new Question4("What are the five colours of the Olympic rings?",new string[]{"Blue, yellow, black, green and pink","Blue, yellow, black, green and red"," Blue, orange, black, green and pink ","I don’t know"},1),new Question4("In football, which team has won the Champions League the most?",new string[]{"FC Barcelona","FC Steaua","Real Madrid","Manchester City"},2),new Question4("What is Japanese sake made from?",new string[]{"Rice","Wood","Bamboo","Grapes"},0),new Question4("What is the capital of Westeros in Game of Thrones?",new string[]{"Free Cities","Yunkai","Oldtown","King’s Landing"},3),new Question4("Which singer has the most UK Number One singles ever?",new string[]{"Justin Beber"," Elvis Presley","Adele","Scorpions"},1),new Question4("What is the smallest planet in our solar system?",new string[]{"Mercury","Pluto","Earth","Neptun"},0),new Question4("Which popular video game franchise has released games with the subtitles World At War and Black Ops?",new string[]{"Assassins Creed","The witcher","Counter Strike","COD"},3),new Question4("What is the currency of Denmark?",new string[]{"Dollar","RON","Krone","Euro"},2),new Question4("How many permanent teeth does a dog have?",new string[]{"43","50","31","42"},3),new Question4("What temperature centigrade does water boil at?",new string[]{"99","101","100","120"},2),new Question4("In which year was the Microsoft XP operating system released?",new string[]{"2001","2004","2007","2002"},0), new Question4("Who discovered penicillin?",new string[]{"Louis Pasteur"," Sigmund Freud"," Edward Jenner"," Alexander Fleming"},3)};
 
     [SerializeField]
     private Text factText;
@@ -27,12 +27,17 @@ public class QuizManager : MonoBehaviour
     private GameObject Blocker;
     [SerializeField]
     private Text Timer;
+    [SerializeField]
+    private GameObject Wrong;
+    [SerializeField]
+    private GameObject Right;
+
     private static int ok = 0;
     private static float score = 0;
-    private float timeRemaining = 5;
+    private float timeRemaining = 20;
     private bool timerIsRunning = false;
     private int score1 = (int) score;
-    private static List<Question> unansweredQuestion;
+    private static List<Question> unansweredQuestion = new List<Question>();
     private static Question currentQuestion;
 
     private Button button;
@@ -44,13 +49,32 @@ public class QuizManager : MonoBehaviour
     public static void setScore(){
         score = 0;
     }
+    public List<Question> getRandomQuestions(){
+        List<Question> quest1 = questionsTF.ToList<Question>();
+        List<Question> quest= new List<Question>();
+        List<Question> quest2 = question4.ToList<Question>();
+        for(int i=0;i<6;i++)
+        {
+        int randomQuestionIndex = Random.Range(0, quest1.Count);
+        Debug.Log(quest1[randomQuestionIndex].GetType());
+        quest.Add(quest1[randomQuestionIndex]);
+        quest1.RemoveAt(randomQuestionIndex);
+        }
+        for(int i=0;i<4;i++)
+        {
+        int randomQuestionIndex = Random.Range(0, quest2.Count);
+        quest.Add(quest2[randomQuestionIndex]);
+        quest2.RemoveAt(randomQuestionIndex);
+        }
+        
+        return quest;
+    }
     void Start ()
     {
-        Blocker.SetActive(false);
         if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 0)
         {
-            unansweredQuestion = questionsTF.ToList<Question>();
-            unansweredQuestion.AddRange(question4.ToList<Question>());
+            unansweredQuestion.AddRange(getRandomQuestions());
+
             getRandomQuestion();
             ok++;
         }
@@ -58,6 +82,9 @@ public class QuizManager : MonoBehaviour
          Score.text = score1.ToString();
 
         showQuestion();
+        Blocker.SetActive(false);
+        Wrong.SetActive(false);
+        Right.SetActive(false);
         timerIsRunning = true;
 
         
@@ -103,7 +130,7 @@ public class QuizManager : MonoBehaviour
 
     void getRandomQuestion()
     {
-        Blocker.SetActive(false);
+        
         if ((unansweredQuestion == null || unansweredQuestion.Count == 0) && ok == 1)
         {
             Debug.Log("terminat");
@@ -137,6 +164,7 @@ public class QuizManager : MonoBehaviour
         if(currentQuestion.getIndex() == i)
         {
             Debug.Log("Correct!");
+            Right.SetActive(true);
             score = score+(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
@@ -145,6 +173,7 @@ public class QuizManager : MonoBehaviour
         else
         {
             Debug.Log("Wrong!");
+            Wrong.SetActive(true);
             button.image.color = Color.red;
         }
         timerIsRunning = false;
@@ -159,6 +188,7 @@ public class QuizManager : MonoBehaviour
         if (currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
+            Right.SetActive(true);
             score += +(timeRemaining*1000); 
             score1 = (int) score;
             Score.text = score1.ToString();
@@ -168,6 +198,7 @@ public class QuizManager : MonoBehaviour
             button.image.color = Color.red;
 
             Debug.Log("Wrong!");
+            Wrong.SetActive(true);
         }
         timerIsRunning = false;
         StartCoroutine(Wait2());
@@ -180,6 +211,7 @@ public class QuizManager : MonoBehaviour
         if (!currentQuestion.getTrue())
         {
             Debug.Log("CORRECT!");
+            Right.SetActive(true);
             button.image.color = Color.green;
             score = score+(timeRemaining*1000); 
             score1 = (int) score;
@@ -189,6 +221,7 @@ public class QuizManager : MonoBehaviour
         {   
             button.image.color = Color.red;
             Debug.Log("Wrong!");
+            Wrong.SetActive(true);
         }
         timerIsRunning = false;
         StartCoroutine(Wait2());
@@ -196,10 +229,19 @@ public class QuizManager : MonoBehaviour
     }
     IEnumerator Wait2(){
         
-        yield return new WaitForSeconds (2);
+        yield return new WaitForSeconds (1);
          timerIsRunning = true;
+
         getRandomQuestion();
     }
+
+    IEnumerator Wait1(){
+        
+        yield return new WaitForSeconds (1);
+         timerIsRunning = true;
+
+    }
+    
 
  
 }
