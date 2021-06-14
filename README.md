@@ -23,6 +23,9 @@ As a ... I want to ...
 8. As a user, I want to create my own quiz.
 9. As a user, I want to see how good I was compare to other players.
 
+## UML diagram
+![image](https://user-images.githubusercontent.com/61587939/121929865-5c046d00-cd4a-11eb-9e55-bf74a09fa73f.png)
+
 ## Technology
 - Unity
 - C#
