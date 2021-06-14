@@ -2,9 +2,12 @@
 
 ## Team members
 
-- Stefan Negulescu
+- Negulescu Stefan
 - Gal Iulian
 - Hirnea Gabriel
+
+## About
+
 
 ## User stories
 
@@ -23,5 +26,5 @@ As a ... I want to ...
 ## Technology
 - Unity
 - C#
-- Firebase
+- PlayFab
 
