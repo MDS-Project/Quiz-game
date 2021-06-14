@@ -7,7 +7,7 @@
 - Hirnea Gabriel
 
 ## About
-  Wiki(https://github.com/MDS-Project/Quiz-game/wiki)
+  [Wiki](https://github.com/MDS-Project/Quiz-game/wiki)
   QuizGame, dupa cum ii spune si numele, este un joc de tip quiz pentru Android, dezvoltat in Unity, limbajul de programare fiind bineinteles C#. Quiz-urile sunt formate din diferite intrebari selectate random dintr-o lista de intrebari, existand atat intrebari cu 4 variante de raspuns, cat si cu variante de tip True or False. Fiecare intrebare are un timp limita de raspuns. In functie de corectitudinea raspunsului, dar si de timpul in care utilizatorul a raspuns, este calculat scorul pentru fiecare intrebare, acesta fiind adaugat la scorul total pe meci.
   Utilizatorii au de asemenea posibilitatea de a vizualiza Leaderboard-ul jocului, ce prezinta cei mai buni jucatori la momentul respectiv, dar si de a-si personaliza profilul, aceste caracteristici fiind posibile cu ajutorul platformei PlayFab detinuta de Microsoft.
 
